@@ -24,6 +24,7 @@ public class CustomerRepositoryImpl implements CustomerRepository{
 
     private final String QUERY_FOR_FIND_ALL = "select * from customers";
     private final String QUERY_FOR_FIND_BY_FIRSTNAME = "select * from customers where firstname = ?";
+    private final String QUERY_FOR_FIND_BY_USERNAME = "select * from customers where username = ?";
     private final String QUERY_FOR_FIND_BY_LASTNAME = "select * from customers where lastname = ?";
     private final String QUERY_FOR_FIND_BY_PHONE = "select * from customers where phone = ?";
     private final String QUERY_FOR_FIND_BY_ID = "select * from customers where id = ?";
@@ -61,6 +62,12 @@ public class CustomerRepositoryImpl implements CustomerRepository{
     public Optional<Customer> findByLastName(String lastname){
         return Optional.ofNullable(jdbcTemplate.queryForObject
                 (QUERY_FOR_FIND_BY_LASTNAME, new Object[]{lastname}, customerRowMapper));
+    }
+
+    @Override
+    public Optional<Customer> findByUsername(String username) {
+        return Optional.ofNullable(jdbcTemplate.queryForObject
+                (QUERY_FOR_FIND_BY_USERNAME, new Object[]{username}, customerRowMapper));
     }
 
     @Cacheable

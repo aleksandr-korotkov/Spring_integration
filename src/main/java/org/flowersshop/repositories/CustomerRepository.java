@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.flowersshop.entities.Customer;
+import org.flowersshop.exceptions.EmptyResultSetException;
 import org.springframework.jdbc.core.RowMapper;
 
 public interface CustomerRepository {
@@ -26,4 +27,6 @@ public interface CustomerRepository {
     Optional<Customer> updateCustomer(Long id, String firstName, String lastName, String phone);
 
     Optional<Customer> createCustomer(String firstName, String lastName, String phone);
+
+    Optional<Customer> findByUsername(String username);
 }

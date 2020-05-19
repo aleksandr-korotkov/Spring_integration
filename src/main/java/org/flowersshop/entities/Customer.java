@@ -1,6 +1,5 @@
 package org.flowersshop.entities;
 
-import org.springframework.context.annotation.Role;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +18,7 @@ public class Customer implements UserDetails {
     private String phone;
     private String password;
     private Set<Role> roles;
+    private String userName;
 
     public Customer() {
     }
@@ -67,6 +67,21 @@ public class Customer implements UserDetails {
         return false;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public String getPassword() {
         return password;
