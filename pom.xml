@@ -16,14 +16,11 @@
         <log4j.version>1.2.17</log4j.version>
         <postgresql.version>42.2.12</postgresql.version>
         <wsdl4j.version>1.6.3</wsdl4j.version>
+        <jstl.version>1.2</jstl.version>
+        <tomcat.embed.jasper>9.0.33</tomcat.embed.jasper>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-            <version>${springboot.version}</version>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
@@ -59,6 +56,32 @@
             <artifactId>wsdl4j</artifactId>
             <version>${wsdl4j.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <version>${springboot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>${jstl.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId>
+            <version>${tomcat.embed.jasper}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+            <version>${springboot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <version>${springboot.version}</version>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 
@@ -86,8 +109,6 @@
                     <sources>
                         <source>${project.basedir}/src/main/resources/bouquets.xsd</source>
                     </sources>
-                    <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
-                    <clearOutputDir>false</clearOutputDir>
                 </configuration>
             </plugin>
         </plugins>

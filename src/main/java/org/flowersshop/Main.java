@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 @EnableCaching
 @EnableTransactionManagement
-public class Main {
+public class Main{
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
     }

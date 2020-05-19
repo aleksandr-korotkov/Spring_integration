@@ -1,17 +1,24 @@
 package org.flowersshop.entities;
 
+import org.springframework.context.annotation.Role;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.Objects;
+import java.util.Set;
 
 @Component
 @Scope(value = "prototype")
-public class Customer {
+public class Customer implements UserDetails {
     private Long id;
     private String firstName;
     private String lastName;
-    String phone;
+    private String phone;
+    private String password;
+    private Set<Role> roles;
 
     public Customer() {
     }
@@ -27,6 +34,46 @@ public class Customer {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+
+    @Override
+    public String getUsername() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
+    }
+
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Long getId() {
