@@ -4,7 +4,6 @@ import org.flowersshop.entities.Customer;
 import org.flowersshop.entities.Role;
 import org.flowersshop.exceptions.EmptyResultSetException;
 import org.flowersshop.repositories.CustomerRepository;
-import org.flowersshop.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,12 +21,10 @@ import java.util.Optional;
 public class CustomerService implements UserDetailsService {
     @PersistenceContext
     private EntityManager em;
-    @Autowired
-    CustomerRepository customerRepository;
-    @Autowired
-    RoleRepository roleRepository;
-    @Autowired
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+    private CustomerRepository customerRepository;
+//    @Autowired
+//    RoleRepository roleRepository;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -74,4 +71,20 @@ public class CustomerService implements UserDetailsService {
 //        return em.createQuery("SELECT u FROM User u WHERE u.id > :paramId", User.class)
 //                .setParameter("paramId", idMin).getResultList();
 //    }
+
+
+    @Autowired
+    public void setCustomerRepository(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
+    }
+
+//    @Autowired
+//    public void setRoleRepository(RoleRepository roleRepository) {
+//        this.roleRepository = roleRepository;
+//    }
+
+    @Autowired
+    public void setbCryptPasswordEncoder(BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
 }

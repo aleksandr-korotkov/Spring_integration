@@ -11,10 +11,10 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
-@RestController
+@RestController("/customers")
 @RequestMapping(value = "/customers")
 public class CustomerRestService {
-    CustomerRepository customerRepository;
+    private CustomerRepository customerRepository;
 
     @Autowired
     public CustomerRestService(CustomerRepository customerRepository) {

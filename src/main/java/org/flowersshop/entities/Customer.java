@@ -17,28 +17,31 @@ public class Customer implements UserDetails {
     private String lastName;
     private String phone;
     private String password;
+    private String passwordConfirm;
     private Set<Role> roles;
     private String userName;
 
     public Customer() {
     }
 
-    public Customer(String firstName, String lastName, String phone) {
+    public Customer(String firstName, String lastName, String phone, String userName) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
+        this.userName = userName;
     }
 
-    public Customer(Long id, String firstName, String lastName, String phone) {
+    public Customer(Long id, String firstName, String lastName, String phone, String userName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
+        this.userName = userName;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return roles;
     }
 
 
@@ -49,22 +52,30 @@ public class Customer implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
     }
 
     public Set<Role> getRoles() {
