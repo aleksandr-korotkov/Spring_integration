@@ -4,10 +4,10 @@ import org.flowersshop.entities.Customer;
 import org.flowersshop.entities.Role;
 import org.flowersshop.exceptions.EmptyResultSetException;
 import org.flowersshop.repositories.CustomerRepository;
+import org.flowersshop.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,19 +22,12 @@ public class CustomerService implements UserDetailsService {
     @PersistenceContext
     private EntityManager em;
     private CustomerRepository customerRepository;
-//    @Autowired
-//    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Customer customer = null;
-        try {
-            customer = customerRepository.findByUsername(username).orElseThrow(EmptyResultSetException::new);
-        } catch (EmptyResultSetException e) {
-            e.printStackTrace();
-        }
-        return customer;
+    public UserDetails loadUserByUsername(String username) {
+        return customerRepository.findByUsername(username).orElse(new Customer());
     }
 
     public Customer findUserById(Long userId) {
@@ -42,17 +35,14 @@ public class CustomerService implements UserDetailsService {
         return userFromDb.orElse(new Customer());
     }
 
-    public List<Customer> allUsers() {
-        return customerRepository.findAll().get();
+    public List<Customer> allUsers() throws EmptyResultSetException {
+        return customerRepository.findAll().orElseThrow(EmptyResultSetException::new);
     }
 
     public boolean saveUser(Customer customer) {
-        Customer customerFromDB = customerRepository.findByUsername(customer.getUsername()).get();
-
-        if (customerFromDB != null) {
+        if(customerRepository.findByUsername(customer.getUsername()).isPresent()){
             return false;
         }
-
         customer.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
         customer.setPassword(bCryptPasswordEncoder.encode(customer.getPassword()));
         customerRepository.createCustomer(customer);
@@ -78,10 +68,10 @@ public class CustomerService implements UserDetailsService {
         this.customerRepository = customerRepository;
     }
 
-//    @Autowired
-//    public void setRoleRepository(RoleRepository roleRepository) {
-//        this.roleRepository = roleRepository;
-//    }
+    @Autowired
+    public void setRoleRepository(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
+    }
 
     @Autowired
     public void setbCryptPasswordEncoder(BCryptPasswordEncoder bCryptPasswordEncoder) {

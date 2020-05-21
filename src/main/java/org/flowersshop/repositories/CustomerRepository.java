@@ -24,9 +24,7 @@ public interface CustomerRepository {
 
     boolean deleteCustomer(Long id);
 
-    Optional<Customer> updateCustomer(Long id, String firstName, String lastName, String phone);
-
-    Optional<Customer> createCustomer(String firstName, String lastName, String phone);
+    Optional<Customer> updateCustomer(Long id, Customer customer);
 
     Optional<Customer> findByUsername(String username);
 }

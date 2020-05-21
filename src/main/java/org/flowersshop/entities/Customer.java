@@ -24,18 +24,20 @@ public class Customer implements UserDetails {
     public Customer() {
     }
 
-    public Customer(String firstName, String lastName, String phone, String userName) {
+    public Customer(String firstName, String lastName, String phone, String password, String userName) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
+        this.password = password;
         this.userName = userName;
     }
 
-    public Customer(Long id, String firstName, String lastName, String phone, String userName) {
+    public Customer(Long id, String firstName, String lastName, String phone,String password, String userName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
+        this.password = password;
         this.userName = userName;
     }
 
@@ -141,6 +143,10 @@ public class Customer implements UserDetails {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", phone='" + phone + '\'' +
+                ", password='" + password + '\'' +
+                ", passwordConfirm='" + passwordConfirm + '\'' +
+                ", roles=" + roles +
+                ", userName='" + userName + '\'' +
                 '}';
     }
 
@@ -156,6 +162,6 @@ public class Customer implements UserDetails {
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName, phone);
+        return Objects.hash(id, firstName, lastName, phone, password, passwordConfirm, roles, userName);
     }
 }

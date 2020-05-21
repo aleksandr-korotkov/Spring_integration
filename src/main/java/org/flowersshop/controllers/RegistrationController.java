@@ -1,6 +1,7 @@
 package org.flowersshop.controllers;
 
 import org.flowersshop.entities.Customer;
+import org.flowersshop.exceptions.EmptyResultSetException;
 import org.flowersshop.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,18 +16,16 @@ import javax.validation.Valid;
 @Controller
 public class RegistrationController {
 
-    @Autowired
     private CustomerService customerService;
 
     @GetMapping("/registration")
     public String registration(Model model) {
-        model.addAttribute("userForm", new Customer());
-
+        model.addAttribute("customerForm", new Customer());
         return "registration";
     }
 
     @PostMapping("/registration")
-    public String addUser(@ModelAttribute("customer") @Valid Customer customerForm, BindingResult bindingResult, Model model) {
+    public String addUser(@ModelAttribute("customer") @Valid Customer customerForm, BindingResult bindingResult, Model model) throws EmptyResultSetException {
 
         if (bindingResult.hasErrors()) {
             return "registration";
@@ -41,5 +40,10 @@ public class RegistrationController {
         }
 
         return "redirect:/";
+    }
+
+    @Autowired
+    public void setCustomerService(CustomerService customerService) {
+        this.customerService = customerService;
     }
 }

@@ -1,12 +1,22 @@
 package org.flowersshop.entities;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.stereotype.Component;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.Set;
 
+@Entity
+@Table(name = "roles")
 public class Role implements GrantedAuthority {
+    @Id
     private Long id;
     private String name;
+    @Transient
     private Set<Customer> customers;
 
     public Role() {

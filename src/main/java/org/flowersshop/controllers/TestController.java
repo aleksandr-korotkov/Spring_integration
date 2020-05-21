@@ -6,13 +6,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("/welcome")
 public class TestController {
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public String printWelcome(ModelMap model) {
-        model.addAttribute("message", "Spring 3 MVC - Hello World");
+        model.addAttribute("message", "empty page");
         return "index";
+    }
+    @RequestMapping(value = "/home", method = RequestMethod.GET)
+    public String elcome(ModelMap model) {
+        model.addAttribute("message", "home page");
+        return "home";
     }
 
 }

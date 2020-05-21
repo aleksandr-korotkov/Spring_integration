@@ -4,6 +4,7 @@ import org.flowersshop.entities.Customer;
 import org.flowersshop.repositories.mappers.CustomerRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.*;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -28,9 +29,9 @@ public class CustomerRepositoryImpl implements CustomerRepository{
     private final String QUERY_FOR_FIND_BY_LASTNAME = "select * from customers where lastname = ?";
     private final String QUERY_FOR_FIND_BY_PHONE = "select * from customers where phone = ?";
     private final String QUERY_FOR_FIND_BY_ID = "select * from customers where id = ?";
-    private final String QUERY_FOR_CREATE = "insert into customers(firstname, lastname, phone) values(?,?,?)";
+    private final String QUERY_FOR_CREATE = "insert into customers(firstname, lastname, phone, password,username) values(?,?,?,?,?)";
     private final String QUERY_FOR_DELETE = "delete from customers where id = ?";
-    private final String QUERY_FOR_UPDATE = "update customers set firstname = ?, lastname = ?,phone = ? where id = ?";
+    private final String QUERY_FOR_UPDATE = "update customers set firstname = ?, lastname = ?,phone = ?, password = ?, username = ? where id = ?";
 
     @Autowired
     public CustomerRepositoryImpl(JdbcTemplate jdbcTemplate) {
@@ -66,8 +67,14 @@ public class CustomerRepositoryImpl implements CustomerRepository{
 
     @Override
     public Optional<Customer> findByUsername(String username) {
-        return Optional.ofNullable(jdbcTemplate.queryForObject
-                (QUERY_FOR_FIND_BY_USERNAME, new Object[]{username}, customerRowMapper));
+        try {
+            return Optional.ofNullable(jdbcTemplate.queryForObject
+                    (QUERY_FOR_FIND_BY_USERNAME, new Object[]{username}, customerRowMapper));
+        }
+        catch (EmptyResultDataAccessException e){
+            e.printStackTrace();
+        }
+        return Optional.empty();
     }
 
     @Cacheable
@@ -81,26 +88,29 @@ public class CustomerRepositoryImpl implements CustomerRepository{
     @Transactional
     @Override
     public void createCustomer(Customer customer) {
+        System.out.println("create from customersrepository "  + customer.toString());
         jdbcTemplate.update(QUERY_FOR_CREATE,
-                customer.getFirstName(), customer.getLastName(),customer.getPhone());
+                customer.getFirstName(), customer.getLastName(),
+                customer.getPhone(),customer.getPassword(),customer.getUserName());
     }
 
-    @CachePut
-    @Transactional
-    @Override
-    public Optional<Customer> createCustomer(String firstName, String lastName, String phone) {
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection
-                    .prepareStatement(QUERY_FOR_CREATE, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, firstName);
-            ps.setString(2, lastName);
-            ps.setString(3, phone);
-            return ps;
-        }, keyHolder);
-        Integer res = (Integer) keyHolder.getKeys().get("id");
-        return Optional.of(findById(Long.valueOf(res)).orElseThrow(IllegalArgumentException::new));
-    }
+//    @CachePut
+//    @Transactional
+//    @Override
+//    public Optional<Customer> createCustomer(String firstName, String lastName, String phone, String password) {
+//        KeyHolder keyHolder = new GeneratedKeyHolder();
+//        jdbcTemplate.update(connection -> {
+//            PreparedStatement ps = connection
+//                    .prepareStatement(QUERY_FOR_CREATE, Statement.RETURN_GENERATED_KEYS);
+//            ps.setString(1, firstName);
+//            ps.setString(2, lastName);
+//            ps.setString(3, phone);
+//            ps.setString(4, password);
+//            return ps;
+//        }, keyHolder);
+//        Integer res = (Integer) keyHolder.getKeys().get("id");
+//        return Optional.of(findById(Long.valueOf(res)).orElseThrow(IllegalArgumentException::new));
+//    }
 
     @CacheEvict(beforeInvocation = true)
     @Transactional
@@ -112,8 +122,9 @@ public class CustomerRepositoryImpl implements CustomerRepository{
     @CachePut
     @Transactional
     @Override
-    public Optional<Customer> updateCustomer(Long id, String firstName, String lastName, String phone){
-        jdbcTemplate.update(QUERY_FOR_UPDATE, firstName,lastName,phone,id);
+    public Optional<Customer> updateCustomer(Long id, Customer customer){
+        jdbcTemplate.update(QUERY_FOR_UPDATE, customer.getFirstName(),customer.getLastName(),customer.getPhone(),
+                customer.getPassword(),customer.getUsername(),id);
         return Optional.of(findById(id).orElseThrow(IllegalArgumentException::new));
     }
 
