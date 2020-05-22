@@ -88,29 +88,10 @@ public class CustomerRepositoryImpl implements CustomerRepository{
     @Transactional
     @Override
     public void createCustomer(Customer customer) {
-        System.out.println("create from customersrepository "  + customer.toString());
         jdbcTemplate.update(QUERY_FOR_CREATE,
                 customer.getFirstName(), customer.getLastName(),
                 customer.getPhone(),customer.getPassword(),customer.getUserName());
     }
-
-//    @CachePut
-//    @Transactional
-//    @Override
-//    public Optional<Customer> createCustomer(String firstName, String lastName, String phone, String password) {
-//        KeyHolder keyHolder = new GeneratedKeyHolder();
-//        jdbcTemplate.update(connection -> {
-//            PreparedStatement ps = connection
-//                    .prepareStatement(QUERY_FOR_CREATE, Statement.RETURN_GENERATED_KEYS);
-//            ps.setString(1, firstName);
-//            ps.setString(2, lastName);
-//            ps.setString(3, phone);
-//            ps.setString(4, password);
-//            return ps;
-//        }, keyHolder);
-//        Integer res = (Integer) keyHolder.getKeys().get("id");
-//        return Optional.of(findById(Long.valueOf(res)).orElseThrow(IllegalArgumentException::new));
-//    }
 
     @CacheEvict(beforeInvocation = true)
     @Transactional

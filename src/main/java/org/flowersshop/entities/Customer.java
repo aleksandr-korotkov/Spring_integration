@@ -1,16 +1,12 @@
 package org.flowersshop.entities;
 
-import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.Objects;
-import java.util.Set;
+import java.util.List;
 
-@Component
-@Scope(value = "prototype")
 public class Customer implements UserDetails {
     private Long id;
     private String firstName;
@@ -18,7 +14,7 @@ public class Customer implements UserDetails {
     private String phone;
     private String password;
     private String passwordConfirm;
-    private Set<Role> roles;
+    private List<Role> roles;
     private String userName;
 
     public Customer() {
@@ -49,7 +45,7 @@ public class Customer implements UserDetails {
 
     @Override
     public String getUsername() {
-        return null;
+        return userName;
     }
 
     @Override
@@ -80,11 +76,11 @@ public class Customer implements UserDetails {
         this.passwordConfirm = passwordConfirm;
     }
 
-    public Set<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 

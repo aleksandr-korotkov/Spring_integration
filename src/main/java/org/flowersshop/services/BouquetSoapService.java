@@ -2,7 +2,7 @@ package org.flowersshop.services;
 
 import org.flowersshop.bindings.*;
 import org.flowersshop.exceptions.EmptyResultSetException;
-import org.flowersshop.repositories.BouquetRepositoryImpl;
+import org.flowersshop.repositories.BouquetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
@@ -16,10 +16,10 @@ public class BouquetSoapService {
     private static final String NAMESPACE_URI = "http://flowersshop.org/bindings";
     private static final String SUCCESS_STATUS = "successful";
 
-    private BouquetRepositoryImpl bouquetRepository;
+    private BouquetRepository bouquetRepository;
 
     @Autowired
-    public BouquetSoapService(BouquetRepositoryImpl bouquetRepository) {
+    public BouquetSoapService(BouquetRepository bouquetRepository) {
         this.bouquetRepository = bouquetRepository;
     }
 

@@ -6,8 +6,6 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import java.util.Optional;
-
 @SpringBootApplication
 @EnableCaching
 @EnableTransactionManagement
