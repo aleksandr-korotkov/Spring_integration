@@ -1,6 +1,7 @@
 package org.flowersshop.repositories;
 
-import org.flowersshop.bindings.Bouquet;
+
+import org.flowersshop.entities.Bouquet;
 import org.flowersshop.repositories.mappers.BouquetRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;

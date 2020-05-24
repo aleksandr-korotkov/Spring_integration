@@ -4,17 +4,18 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 //import javax.persistence.*;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Component
-//@Entity
+@Entity
 @Scope(value = "prototype")
 public class Shop {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-//    @Column(name = "adress")
+    @Column(name = "adress")
     private Long addressId;
 
     public Shop() {

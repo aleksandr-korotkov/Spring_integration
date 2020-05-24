@@ -5,8 +5,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
-@Component
-@Scope(value = "prototype")
 public class Address {
     private Long id;
     private String city;

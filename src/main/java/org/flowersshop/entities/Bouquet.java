@@ -1,19 +1,28 @@
 package org.flowersshop.entities;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import java.math.BigDecimal;
-import java.util.Objects;
+import java.util.List;
 
-@Component
-@Scope(value = "prototype")
+@Entity(name = "bouquets")
 public class Bouquet {
+    @Id
     private Long id;
     private String name;
     private BigDecimal price;
+    @ManyToMany(mappedBy = "bouquets")
+    private List<Sale> sales;
 
     public Bouquet() {
+    }
+
+    public Bouquet(Long id, String name, BigDecimal price, List<Sale> sales) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.sales = sales;
     }
 
     public Long getId() {
@@ -40,26 +49,11 @@ public class Bouquet {
         this.price = price;
     }
 
-    @Override
-    public String toString() {
-        return "Bouquet{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                '}';
+    public List<Sale> getSales() {
+        return sales;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Bouquet bouquet = (Bouquet) o;
-        return Objects.equals(name, bouquet.name) &&
-                Objects.equals(price, bouquet.price);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, price);
+    public void setSales(List<Sale> sales) {
+        this.sales = sales;
     }
 }

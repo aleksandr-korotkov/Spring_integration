@@ -1,6 +1,7 @@
 package org.flowersshop.repositories.mappers;
 
-import org.flowersshop.bindings.Bouquet;
+
+import org.flowersshop.entities.Bouquet;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 

@@ -1,6 +1,6 @@
 package org.flowersshop.repositories;
 
-import org.flowersshop.bindings.Bouquet;
+import org.flowersshop.entities.Bouquet;
 
 import java.math.BigDecimal;
 import java.util.List;
