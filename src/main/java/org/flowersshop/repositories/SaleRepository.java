@@ -1,11 +1,16 @@
 package org.flowersshop.repositories;
 
 import org.flowersshop.entities.Sale;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-import java.time.LocalDate;
+import java.math.BigDecimal;
+import java.util.List;
 
-public interface SaleRepository extends CrudRepository<Sale,Long> {
+public interface SaleRepository extends PagingAndSortingRepository<Sale, Integer> {
 
-    Iterable<Sale> findByDate(LocalDate date);
+    List<Sale> findAllByTotalSum(BigDecimal price, Pageable pageable);
+
+    Page<Sale> findAll(Pageable pageable);
 }

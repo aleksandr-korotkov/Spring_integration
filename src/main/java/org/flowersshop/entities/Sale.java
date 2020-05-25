@@ -17,11 +17,12 @@ public class Sale {
     private Long customerId;
     @Column(name = "shop_id")
     private Long shopId;
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "sale_detail",
-            joinColumns = @JoinColumn(name = "sale_id"),
-            inverseJoinColumns = @JoinColumn(name = "bouquet_id"))
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable(
+//            name = "sale_detail",
+//            joinColumns = @JoinColumn(name = "sale_id"),
+//            inverseJoinColumns = @JoinColumn(name = "bouquet_id"))
+    @Transient
     private List<Bouquet> bouquets;
 
 

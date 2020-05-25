@@ -1,9 +1,6 @@
 package org.flowersshop.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -13,7 +10,8 @@ public class Bouquet {
     private Long id;
     private String name;
     private BigDecimal price;
-    @ManyToMany(mappedBy = "bouquets",fetch = FetchType.EAGER)
+    //@ManyToMany(mappedBy = "bouquets",fetch = FetchType.EAGER)
+    @Transient
     private List<Sale> sales;
 
     public Bouquet() {

@@ -2,6 +2,7 @@ package org.flowersshop.controllers;
 
 import org.flowersshop.exceptions.EmptyResultSetException;
 import org.flowersshop.services.CustomerService;
+import org.flowersshop.services.SalesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class MainController {
 
     private CustomerService customerService;
+
 
     @Autowired
     public void setCustomerService(CustomerService customerService) {
@@ -35,5 +37,6 @@ public class MainController {
         model.addAttribute("customer_list", customerService.allUsers());
         return "customers";
     }
+
 
 }
