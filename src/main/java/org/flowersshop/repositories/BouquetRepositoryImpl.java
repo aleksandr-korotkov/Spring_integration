@@ -30,7 +30,9 @@ public class BouquetRepositoryImpl implements BouquetRepository {
     private final String QUERY_UPDATE = "update bouquets set name = ?, price = ? where id = ?";
     private final String QUERY_DELETE = "delete from bouquets where id = ?";
     private final String QUERY_FIND_BY_NAME = "select * from bouquets where name = ?";
+    private final String QUERY_FIND_BY_ID = "select * from bouquets where id = ?";
     private final String QUERY_FIND_BY_PRICE = "select * from bouquets where price = ?";
+    private final String QUERY_FIND_BY_MIN_PRICE = "select * from bouquets where price > ?";
     private final String QUERY_FIND_BY_NAME_AND_PRICE = "select * from bouquets where name = ? and price = ?";
 
     private JdbcTemplate jdbcTemplate;
@@ -39,6 +41,11 @@ public class BouquetRepositoryImpl implements BouquetRepository {
     @Autowired
     public BouquetRepositoryImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Override
+    public Optional<Bouquet> findById(Long id) {
+        return Optional.ofNullable(jdbcTemplate.queryForObject(QUERY_FIND_BY_ID,bouquetRowMapper));
     }
 
     @Override
@@ -60,6 +67,13 @@ public class BouquetRepositoryImpl implements BouquetRepository {
     public Optional<List<Bouquet>> findByNameAndPrice(String name, BigDecimal price){
         return Optional.of(jdbcTemplate.query(QUERY_FIND_BY_NAME_AND_PRICE,
                 new Object[]{name, price},bouquetRowMapper));
+    }
+
+    @Override
+    @Cacheable
+    public Optional<List<Bouquet>> findByMinPrice(BigDecimal minPrice){
+        return Optional.of(jdbcTemplate.query(QUERY_FIND_BY_MIN_PRICE,
+                new Object[]{minPrice},bouquetRowMapper));
     }
 
     @Override
@@ -86,19 +100,13 @@ public class BouquetRepositoryImpl implements BouquetRepository {
     @Override
     @CachePut
     public boolean updateBouquet(Long id, String name, BigDecimal price){
-        if(jdbcTemplate.update(QUERY_UPDATE, name, price, id)>0){
-            return true;
-        }
-        return false;
+        return jdbcTemplate.update(QUERY_UPDATE, name, price, id)>0;
     }
 
     @Override
     @CacheEvict(beforeInvocation = true)
-    public boolean deleteBouquet(Long id){
-        if(jdbcTemplate.update(QUERY_DELETE,id)>0){
-            return true;
-        }
-        return false;
+    public boolean deleteBouquet(Long id) {
+        return jdbcTemplate.update(QUERY_DELETE, id)>0;
     }
 
     @Autowired

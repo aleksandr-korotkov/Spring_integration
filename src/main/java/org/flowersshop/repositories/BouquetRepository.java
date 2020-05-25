@@ -16,9 +16,13 @@ public interface BouquetRepository {
 
     Optional<List<Bouquet>> findAll();
 
+    Optional<List<Bouquet>> findByMinPrice(BigDecimal minPrice);
+
     Long createBouquet(String name, BigDecimal price);
 
     boolean updateBouquet(Long id, String name, BigDecimal price);
 
     boolean deleteBouquet(Long id);
+
+    Optional<Bouquet> findById(Long id);
 }

@@ -6,13 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.*;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.PreparedStatement;
-import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
 
@@ -72,7 +68,7 @@ public class CustomerRepositoryImpl implements CustomerRepository{
                     (QUERY_FOR_FIND_BY_USERNAME, new Object[]{username}, customerRowMapper));
         }
         catch (EmptyResultDataAccessException e){
-            e.printStackTrace();
+            e.getMessage();
         }
         return Optional.empty();
     }

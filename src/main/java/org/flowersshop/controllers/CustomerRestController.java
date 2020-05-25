@@ -1,5 +1,6 @@
 package org.flowersshop.controllers;
 
+import javax.validation.Valid;
 import org.flowersshop.entities.Customer;
 import org.flowersshop.exceptions.EmptyResultSetException;
 import org.flowersshop.repositories.CustomerRepository;
@@ -7,12 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/customers")
+@RequestMapping(value = "api/customers")
 public class CustomerRestController {
     private CustomerRepository customerRepository;
 

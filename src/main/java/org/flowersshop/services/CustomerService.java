@@ -19,7 +19,6 @@ public class CustomerService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        System.out.println("method find by username " + username);
         return customerRepository.findByUsername(username).orElse(new Customer());
     }
 

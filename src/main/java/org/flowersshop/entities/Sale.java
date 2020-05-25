@@ -88,21 +88,4 @@ public class Sale {
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Sale sale = (Sale) o;
-        return Objects.equals(id, sale.id) &&
-                Objects.equals(date, sale.date) &&
-                Objects.equals(totalSum, sale.totalSum) &&
-                Objects.equals(customerId, sale.customerId) &&
-                Objects.equals(shopId, sale.shopId) &&
-                Objects.equals(bouquets, sale.bouquets);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, date, totalSum, customerId, shopId, bouquets);
-    }
 }

@@ -5,11 +5,17 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>home page</title>
+    <title>Пользователи</title>
 </head>
 <body>
 <div>
-    <h2>Новости <br> Только для залогинившихся пользователей.</h2>
+    <table>
+        <c:forEach items="${customer_list}" var="item">
+            <tr>
+                <td><c:out value="${item}" /></td>
+            </tr>
+        </c:forEach>
+    </table>
     <a href="/">Главная</a>
 </div>
 </body>

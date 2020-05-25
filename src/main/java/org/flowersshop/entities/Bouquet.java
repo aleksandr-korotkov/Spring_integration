@@ -1,6 +1,7 @@
 package org.flowersshop.entities;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import java.math.BigDecimal;
@@ -12,7 +13,7 @@ public class Bouquet {
     private Long id;
     private String name;
     private BigDecimal price;
-    @ManyToMany(mappedBy = "bouquets")
+    @ManyToMany(mappedBy = "bouquets",fetch = FetchType.EAGER)
     private List<Sale> sales;
 
     public Bouquet() {
@@ -55,5 +56,15 @@ public class Bouquet {
 
     public void setSales(List<Sale> sales) {
         this.sales = sales;
+    }
+
+    @Override
+    public String toString() {
+        return "Bouquet{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", sales=" + sales +
+                '}';
     }
 }

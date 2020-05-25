@@ -3,7 +3,6 @@ package org.flowersshop.entities;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-//import javax.persistence.*;
 import javax.persistence.*;
 import java.util.Objects;
 
