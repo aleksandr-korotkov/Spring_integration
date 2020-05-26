@@ -30,8 +30,4 @@ public class SalesService {
     public List<Sale> findAllBySum(BigDecimal sum){
         return saleRepository.findAllByTotalSum(sum,firstPageWithTwoElements);
     }
-
-//    public Iterable<Sale> findByDate(LocalDate date) {
-//        return saleRepository.findByDate(date);
-//    }
 }

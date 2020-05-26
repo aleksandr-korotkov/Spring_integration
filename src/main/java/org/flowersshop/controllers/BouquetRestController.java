@@ -1,7 +1,6 @@
 package org.flowersshop.controllers;
 
 import org.flowersshop.entities.Bouquet;
-import org.flowersshop.entities.Customer;
 import org.flowersshop.exceptions.EmptyResultSetException;
 import org.flowersshop.services.BouquetService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "api/bouquets")

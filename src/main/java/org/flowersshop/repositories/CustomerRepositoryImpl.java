@@ -61,6 +61,7 @@ public class CustomerRepositoryImpl implements CustomerRepository{
                 (QUERY_FOR_FIND_BY_LASTNAME, new Object[]{lastname}, customerRowMapper));
     }
 
+    @Cacheable
     @Override
     public Optional<Customer> findByUsername(String username) {
         try {

@@ -35,7 +35,7 @@ public class CustomerRestController {
 
     @PostMapping
     @ResponseBody
-    public void createCustomer(@RequestBody @Valid Customer customer) throws EmptyResultSetException {
+    public void createCustomer(@RequestBody @Valid Customer customer) {
         customerRepository.createCustomer(customer);
     }
 
