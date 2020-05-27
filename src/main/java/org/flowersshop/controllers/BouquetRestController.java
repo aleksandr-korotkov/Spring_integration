@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -23,12 +22,9 @@ public class BouquetRestController {
     }
 
     @GetMapping
-    @ResponseBody
     public ResponseEntity<List<Bouquet>> getResponse(
             @RequestParam(value = "name", required = false)String name,
-            @RequestParam(value = "price", required = false) BigDecimal price,
-            @RequestParam(value = "min_price", required = false) BigDecimal minPrice,
-            @RequestParam(value = "max_price", required = false) BigDecimal maxPrice
+            @RequestParam(value = "price", required = false) BigDecimal price
     ) throws EmptyResultSetException {
 
         if(name!=null && price == null){
@@ -46,19 +42,16 @@ public class BouquetRestController {
     }
 
     @PostMapping
-    @ResponseBody
-    public Long createBouquet(@RequestBody @Valid Bouquet bouquet) {
+    public Long createBouquet(@RequestBody Bouquet bouquet) {
         return bouquetService.createBouquet(bouquet);
     }
 
     @PutMapping(value = "/{id}")
-    @ResponseBody
-    public boolean updateBouquet( @PathVariable("id") Long id, @RequestBody @Valid Bouquet bouquet){
+    public boolean updateBouquet( @PathVariable("id") Long id, @RequestBody Bouquet bouquet){
         return bouquetService.updateBouquet(id, bouquet);
     }
 
     @DeleteMapping(value = "/{id}")
-    @ResponseBody
     public boolean deleteCustomer(@PathVariable("id") Long id) throws EmptyResultSetException {
         return bouquetService.deleteBouquet(id);
     }

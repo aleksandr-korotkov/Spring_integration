@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.validation.Valid;
-
 @Controller
 public class RegistrationController {
 
@@ -25,7 +23,7 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String addUser(@ModelAttribute("customer") @Valid Customer customerForm, BindingResult bindingResult, Model model) throws EmptyResultSetException {
+    public String addUser(@ModelAttribute("customer") Customer customerForm, BindingResult bindingResult, Model model) throws EmptyResultSetException {
 
         if (bindingResult.hasErrors()) {
             return "registration";
