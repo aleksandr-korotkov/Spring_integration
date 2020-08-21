@@ -1,12 +1,7 @@
 package org.flowersshop.entities;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
 import java.util.Objects;
 
-@Component
-@Scope(value = "prototype")
 public class Flower {
     private Long id;
     private String name;

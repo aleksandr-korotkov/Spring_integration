@@ -1,6 +1,6 @@
 package org.flowersshop.repositories;
 
-import org.flowersshop.bindings.Bouquet;
+import org.flowersshop.entities.Bouquet;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -16,9 +16,13 @@ public interface BouquetRepository {
 
     Optional<List<Bouquet>> findAll();
 
+    Optional<List<Bouquet>> findByMinPrice(BigDecimal minPrice);
+
     Long createBouquet(String name, BigDecimal price);
 
     boolean updateBouquet(Long id, String name, BigDecimal price);
 
     boolean deleteBouquet(Long id);
+
+    Optional<Bouquet> findById(Long id);
 }

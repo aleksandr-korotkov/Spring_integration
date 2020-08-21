@@ -1,11 +1,9 @@
 package org.flowersshop.repositories;
 
-import java.sql.ResultSet;
 import java.util.List;
 import java.util.Optional;
 
 import org.flowersshop.entities.Customer;
-import org.springframework.jdbc.core.RowMapper;
 
 public interface CustomerRepository {
 
@@ -23,7 +21,7 @@ public interface CustomerRepository {
 
     boolean deleteCustomer(Long id);
 
-    Optional<Customer> updateCustomer(Long id, String firstName, String lastName, String phone);
+    Optional<Customer> updateCustomer(Long id, Customer customer);
 
-    Optional<Customer> createCustomer(String firstName, String lastName, String phone);
+    Optional<Customer> findByUsername(String username);
 }

@@ -1,20 +1,29 @@
 package org.flowersshop.entities;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Objects;
+import java.util.List;
 
-@Component
-@Scope(value = "prototype")
+@Entity(name = "sales")
 public class Sale {
+    @Id
     private Long id;
     private LocalDate date;
+    @Column(name = "sum_total")
     private BigDecimal totalSum;
+    @Column(name = "customer_id")
     private Long customerId;
+    @Column(name = "shop_id")
     private Long shopId;
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable(
+//            name = "sale_detail",
+//            joinColumns = @JoinColumn(name = "sale_id"),
+//            inverseJoinColumns = @JoinColumn(name = "bouquet_id"))
+    @Transient
+    private List<Bouquet> bouquets;
+
 
     public Sale() {
     }
@@ -59,6 +68,14 @@ public class Sale {
         this.shopId = shopId;
     }
 
+    public List<Bouquet> getBouquets() {
+        return bouquets;
+    }
+
+    public void setBouquets(List<Bouquet> bouquets) {
+        this.bouquets = bouquets;
+    }
+
     @Override
     public String toString() {
         return "Sale{" +
@@ -67,22 +84,8 @@ public class Sale {
                 ", totalSum=" + totalSum +
                 ", customerId=" + customerId +
                 ", shopId=" + shopId +
+                ", bouquets=" + bouquets +
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Sale sale = (Sale) o;
-        return Objects.equals(date, sale.date) &&
-                Objects.equals(totalSum, sale.totalSum) &&
-                Objects.equals(customerId, sale.customerId) &&
-                Objects.equals(shopId, sale.shopId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(date, totalSum, customerId, shopId);
-    }
 }

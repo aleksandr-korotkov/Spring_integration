@@ -1,0 +1,122 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://flowersshop.org/bindings"
+           targetNamespace="http://flowersshop.org/bindings" elementFormDefault="qualified">
+
+    <xs:element name="getBouquetByNameRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getBouquetByNameResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="bouquet" type="tns:bouquet" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getBouquetByPriceRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="price" type="xs:decimal"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getBouquetByPriceResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="bouquet" type="tns:bouquet" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getBouquetByNameAndPriceRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string"/>
+                <xs:element name="price" type="xs:decimal"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getBouquetByNameAndPriceResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="bouquet" type="tns:bouquet" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getAllBouquetsRequest">
+        <xs:complexType/>
+    </xs:element>
+
+    <xs:element name="getAllBouquetsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="bouquet" type="tns:bouquet" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="addBouquetRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string"/>
+                <xs:element name="price" type="xs:decimal"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="addBouquetResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+                <xs:element name="message" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="updateBouquetRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="bouquet" type="tns:bouquet"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="updateBouquetResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="message" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="deleteBouquetRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="bouquetId" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="deleteBouquetResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="message" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="bouquet">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="price" type="xs:decimal"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>
