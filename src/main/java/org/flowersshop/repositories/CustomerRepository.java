@@ -4,10 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.flowersshop.entities.Customer;
+import org.springframework.data.repository.CrudRepository;
 
-public interface CustomerRepository {
+public interface CustomerRepository extends CrudRepository <Customer,Long> {
 
-    Optional<List<Customer>> findAll();
+    List<Customer> findAll();
 
     Optional<Customer> findById(long id);
 
@@ -17,11 +18,8 @@ public interface CustomerRepository {
 
     Optional<Customer> findByPhone(String phone);
 
-    void createCustomer(Customer customer);
+    Customer save(Customer customer);
 
-    boolean deleteCustomer(Long id);
+    void deleteById(Long id);
 
-    Optional<Customer> updateCustomer(Long id, Customer customer);
-
-    Optional<Customer> findByUsername(String username);
 }

@@ -1,48 +1,19 @@
 package org.flowersshop.entities;
 
-import java.util.Objects;
+import lombok.Data;
+import lombok.ToString;
 
+import javax.persistence.*;
+import java.util.List;
+
+@Data
+@ToString(exclude = "bouquets")
+@Entity(name = "flowers")
 public class Flower {
+    @Id
+    @GeneratedValue
     private Long id;
     private String name;
-
-    public Flower() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return "Flower{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Flower flower = (Flower) o;
-        return Objects.equals(name, flower.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
-    }
+    @ManyToMany(mappedBy = "flowers",fetch = FetchType.EAGER)
+    private List<Bouquet> bouquets;
 }

@@ -24,7 +24,7 @@ public class BouquetSoapService {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getBouquetByNameRequest")
     @ResponsePayload
-    public GetBouquetByNameResponse getBouquetByName(@RequestPayload  GetBouquetByNameRequest request) {
+    public GetBouquetByNameResponse getBouquetByName(@RequestPayload  GetBouquetByNameRequest request) throws EmptyResultSetException {
         GetBouquetByNameResponse response = new GetBouquetByNameResponse();
         response.getBouquet().addAll(bouquetSoapEntityAdapterService.findByName(request.getName()));
         return response;
@@ -59,19 +59,8 @@ public class BouquetSoapService {
     @ResponsePayload
     public AddBouquetResponse addBouquet(@RequestPayload AddBouquetRequest request) {
         AddBouquetResponse response = new AddBouquetResponse();
-        response.setId(bouquetSoapEntityAdapterService.createBouquet(request.getName(), request.getPrice()));
+        response.setId(bouquetSoapEntityAdapterService.createBouquet(request.getName(), request.getPrice()).getId());
         if(response.getId() != 0){
-            response.setMessage(SUCCESS_STATUS);
-        }
-        return response;
-    }
-
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "updateBouquetRequest")
-    @ResponsePayload
-    public UpdateBouquetResponse updateBouquet(@RequestPayload UpdateBouquetRequest request) {
-        UpdateBouquetResponse response = new UpdateBouquetResponse();
-        if(bouquetSoapEntityAdapterService.updateBouquet(request.getBouquet().getId(),
-                request.getBouquet().getName(),request.getBouquet().getPrice())){
             response.setMessage(SUCCESS_STATUS);
         }
         return response;
@@ -79,11 +68,7 @@ public class BouquetSoapService {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "deleteBouquetRequest")
     @ResponsePayload
-    public DeleteBouquetResponse deleteBouquet(@RequestPayload DeleteBouquetRequest request) {
-        DeleteBouquetResponse response = new DeleteBouquetResponse();
-        if(bouquetSoapEntityAdapterService.deleteBouquet(request.getBouquetId())){
-            response.setMessage(SUCCESS_STATUS);
-        }
-        return response;
+    public void deleteBouquet(@RequestPayload DeleteBouquetRequest request) {
+        bouquetSoapEntityAdapterService.deleteBouquet(request.getBouquetId());
     }
 }

@@ -1,7 +1,6 @@
 package org.flowersshop.services;
 
 import org.flowersshop.entities.Customer;
-import org.flowersshop.exceptions.EmptyResultSetException;
 import org.flowersshop.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,7 +18,7 @@ public class CustomerService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        return customerRepository.findByUsername(username).orElse(new Customer());
+        return customerRepository.findByFirstName(username).orElse(new Customer());
     }
 
     public Customer findUserById(Long userId) {
@@ -27,22 +26,22 @@ public class CustomerService implements UserDetailsService {
         return customer.orElse(new Customer());
     }
 
-    public List<Customer> allUsers() throws EmptyResultSetException {
-        return customerRepository.findAll().orElseThrow(EmptyResultSetException::new);
+    public List<Customer> allUsers() {
+        return customerRepository.findAll();
     }
 
     public boolean saveUser(Customer customer) {
-        if(customerRepository.findByUsername(customer.getUsername()).isPresent()){
+        if(customerRepository.findByFirstName(customer.getUsername()).isPresent()){
             return false;
         }
         customer.setPassword(bCryptPasswordEncoder.encode(customer.getPassword()));
-        customerRepository.createCustomer(customer);
+        customerRepository.save(customer);
         return true;
     }
 
     public boolean deleteUser(Long id) {
         if (customerRepository.findById(id).isPresent()) {
-            customerRepository.deleteCustomer(id);
+            customerRepository.deleteById(id);
             return true;
         }
         return false;

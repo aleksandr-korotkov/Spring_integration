@@ -22,6 +22,18 @@ public class BouquetRestController {
         this.bouquetService = bouquetService;
     }
 
+    @GetMapping(value = "/find/all")
+    @ResponseBody
+    public List<Bouquet> findAll() {
+        return bouquetService.findAll();
+    }
+
+    @GetMapping(value = "/find/{name}")
+    @ResponseBody
+    public List<Bouquet> findByName(@PathVariable("name")String name) throws EmptyResultSetException {
+        return bouquetService.findByName(name);
+    }
+
     @GetMapping
     @ResponseBody
     public ResponseEntity<List<Bouquet>> getResponse(
@@ -47,19 +59,14 @@ public class BouquetRestController {
 
     @PostMapping
     @ResponseBody
-    public Long createBouquet(@RequestBody @Valid Bouquet bouquet) {
-        return bouquetService.createBouquet(bouquet);
-    }
-
-    @PutMapping(value = "/{id}")
-    @ResponseBody
-    public boolean updateBouquet( @PathVariable("id") Long id, @RequestBody @Valid Bouquet bouquet){
-        return bouquetService.updateBouquet(id, bouquet);
+    public Bouquet saveBouquet(@RequestBody @Valid Bouquet bouquet) {
+        return bouquetService.saveBouquet(bouquet);
     }
 
     @DeleteMapping(value = "/{id}")
     @ResponseBody
-    public boolean deleteCustomer(@PathVariable("id") Long id) throws EmptyResultSetException {
-        return bouquetService.deleteBouquet(id);
+    public void deleteBouquet(@PathVariable("id") Long id) {
+        bouquetService.deleteBouquet(id);
     }
+
 }

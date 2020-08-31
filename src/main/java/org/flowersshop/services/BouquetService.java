@@ -4,12 +4,14 @@ import org.flowersshop.entities.Bouquet;
 import org.flowersshop.exceptions.EmptyResultSetException;
 import org.flowersshop.repositories.BouquetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @Service
+@CacheConfig(cacheNames = "bouquets")
 public class BouquetService {
 
     private BouquetRepository bouquetRepository;
@@ -19,8 +21,8 @@ public class BouquetService {
         this.bouquetRepository = bouquetRepository;
     }
 
-    public List<Bouquet> findAll() throws EmptyResultSetException {
-        return bouquetRepository.findAll().orElseThrow(EmptyResultSetException::new);
+    public List<Bouquet> findAll() {
+        return bouquetRepository.findAll();
     }
 
     public List<Bouquet> findByName(String name) throws EmptyResultSetException {
@@ -35,23 +37,15 @@ public class BouquetService {
         return bouquetRepository.findByNameAndPrice(name, price).orElseThrow(EmptyResultSetException::new);
     }
 
-    public List<Bouquet> findByMinPrice(BigDecimal minPrice) throws EmptyResultSetException {
-        return bouquetRepository.findByMinPrice(minPrice).orElseThrow(EmptyResultSetException::new);
-    }
-
     public Bouquet findById(Long id) throws EmptyResultSetException {
         return bouquetRepository.findById(id).orElseThrow(EmptyResultSetException::new);
     }
 
-    public boolean deleteBouquet(Long id) {
-        return bouquetRepository.deleteBouquet(id);
+    public void deleteBouquet(Long id) {
+        bouquetRepository.deleteById(id);
     }
 
-    public Long createBouquet(Bouquet bouquet) {
-        return bouquetRepository.createBouquet(bouquet.getName(), bouquet.getPrice());
-    }
-
-    public Boolean updateBouquet(Long id, Bouquet bouquet) {
-        return bouquetRepository.updateBouquet(id, bouquet.getName(), bouquet.getPrice());
+    public Bouquet saveBouquet(Bouquet bouquet) {
+        return bouquetRepository.save(bouquet);
     }
 }

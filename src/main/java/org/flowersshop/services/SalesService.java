@@ -3,7 +3,6 @@ package org.flowersshop.services;
 import org.flowersshop.entities.Sale;
 import org.flowersshop.repositories.SaleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -29,5 +28,9 @@ public class SalesService {
 
     public List<Sale> findAllBySum(BigDecimal sum){
         return saleRepository.findAllByTotalSum(sum,firstPageWithTwoElements);
+    }
+
+    public List<Sale> findAll(){
+        return saleRepository.findAll();
     }
 }

@@ -24,7 +24,7 @@ public class CustomerRestController {
     @GetMapping
     @ResponseBody
     public ResponseEntity<List<Customer>> getAllCustomers() throws EmptyResultSetException {
-        return ResponseEntity.ok().body(customerRepository.findAll().orElseThrow(EmptyResultSetException::new));
+        return ResponseEntity.ok().body(customerRepository.findAll());
     }
 
     @GetMapping(value = "/{id}")
@@ -35,15 +35,8 @@ public class CustomerRestController {
 
     @PostMapping
     @ResponseBody
-    public void createCustomer(@RequestBody @Valid Customer customer) {
-        customerRepository.createCustomer(customer);
-    }
-
-    @PutMapping(value = "/{id}")
-    @ResponseBody
-    public ResponseEntity<Customer> updateCustomer( @PathVariable("id") Long id, @RequestBody @Valid Customer customer) throws EmptyResultSetException {
-        return ResponseEntity.ok().body(customerRepository.updateCustomer(id, customer).
-                orElseThrow(EmptyResultSetException::new));
+    public void save(@RequestBody @Valid Customer customer) {
+        customerRepository.save(customer);
     }
 
     @DeleteMapping(value = "/{id}")
@@ -51,7 +44,7 @@ public class CustomerRestController {
     public ResponseEntity<Customer> deleteCustomer(@PathVariable("id") Long id) throws EmptyResultSetException {
         Optional<Customer> customer = customerRepository.findById(id);
         if(customer.isPresent()){
-            customerRepository.deleteCustomer(id);
+            customerRepository.deleteById(id);
         }
         return ResponseEntity.ok().body(customer.orElseThrow(EmptyResultSetException::new));
     }

@@ -1,68 +1,28 @@
 package org.flowersshop.entities;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
+@Data
 @Entity(name = "bouquets")
 public class Bouquet {
     @Id
+    @GeneratedValue
     private Long id;
     private String name;
     private BigDecimal price;
-    //@ManyToMany(mappedBy = "bouquets",fetch = FetchType.EAGER)
-    @Transient
+
+    @ManyToMany(mappedBy = "bouquets",fetch = FetchType.EAGER)
     private List<Sale> sales;
 
-    public Bouquet() {
-    }
-
-    public Bouquet(Long id, String name, BigDecimal price, List<Sale> sales) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.sales = sales;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public List<Sale> getSales() {
-        return sales;
-    }
-
-    public void setSales(List<Sale> sales) {
-        this.sales = sales;
-    }
-
-    @Override
-    public String toString() {
-        return "Bouquet{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", sales=" + sales +
-                '}';
-    }
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "flowers_in_bouquet",
+            joinColumns = @JoinColumn(name = "flowers_id"),
+            inverseJoinColumns = @JoinColumn(name = "bouquet_id"))
+    private Set<Flower> flowers;
 }
