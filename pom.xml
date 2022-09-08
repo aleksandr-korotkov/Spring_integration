@@ -14,7 +14,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <log4j.version>1.2.17</log4j.version>
-        <postgresql.version>42.2.12</postgresql.version>
+        <postgresql.version>42.4.1</postgresql.version>
         <wsdl4j.version>1.6.3</wsdl4j.version>
         <jstl.version>1.2</jstl.version>
         <tomcat.embed.jasper>9.0.33</tomcat.embed.jasper>
